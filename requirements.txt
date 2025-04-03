@@ -1,2 +1,4 @@
-flask
 tensorflow
+flask
+pillow
+numpy
