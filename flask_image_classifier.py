@@ -1,9 +1,13 @@
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"  # Disable GPU usage
+
 from flask import Flask, request, jsonify
 import tensorflow as tf
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array, load_img
 import numpy as np
 import io
+
 
 app = Flask(__name__)
 
@@ -48,5 +52,7 @@ def health_check():
 
 
 
+
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    port = int(os.environ.get("PORT", 5000))  # Use Render's port, default to 5000 locally
+    app.run(debug=True, host='0.0.0.0', port=port)
