@@ -8,7 +8,8 @@ import io
 app = Flask(__name__)
 
 # Load the pre-trained TensorFlow model
-model = load_model('nsfw_mobilenetv2.keras')
+model = load_model('nsfw_mobilenetv2.keras', compile=False)
+
 
 # Define the label mapping
 labels = {0: 'drawings', 1: 'hentai', 2: 'neutral', 3: 'porn', 4: 'sexy'}
@@ -40,6 +41,12 @@ def classify_image():
         })
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@app.route('/', methods=['GET'])
+def health_check():
+    return jsonify({"status": "running"}), 200
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001)
